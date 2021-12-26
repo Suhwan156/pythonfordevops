@@ -4,6 +4,8 @@
 ex) vim - vimrc, bash - .bashrc
 ㅇ 이 파일들은 각기 다른 위치에 저장할 수 있는데, 보통 프로그램에 이 파일을 확인할 위치의 순서가 정의되어 있음
 """
+import pathlib
+
 """
 아래 예시는 같은 위치에서 rc파일을 찾기 위해 시도하는 것을 보여줌
 ㅇ 파일에서 파이썬 코드를 실행할 때 파이썬이 자동으로 설정하는 file 변수 사용
@@ -13,7 +15,7 @@ ex) vim - vimrc, bash - .bashrc
 """
 
 import os
-
+from pathlib import Path
 
 def find_rc(rc_name=".examplerc"):
     #Env 변수 확인
@@ -45,5 +47,40 @@ def find_rc(rc_name=".examplerc"):
     print(f"checking {config_path}")
     if os.path.exists(config_path):
         return config_path
+
+    print(f"File {rc_name} has not been found")
+
+# os.path 대신 pathlib 사용
+def findpathlib_rc(rc_name=".examplerc"):
+
+    # Env 변수 확인
+    var_name = "EXAMPLERC_DIR"
+    example_dir = os.environ.get(var_name)    # 이 위치까지는 pathlib가 환경변수를 확장하지 않은 상태, 대신 os.environ으로 변수 값 구함
+    if example_dir:
+        dir_path = pathlib.Path(example_dir)    # 이 부분에서 현재 실행중인 OS에 맞는 pathlib.Path 객체 생성
+        config_path = dir_path / rc_name    # 상위 경로와 슬래쉬, 문자열로 새로운 pathlib.Path 객체 생성
+        print(f"Checking {config_path}")
+        if config_path.exists():    # pathlib.Path 객체에는 자체적으로 exists 메서드가 있음
+            return config_path.as_postix()    # as_postix를 호출해 경로를 문자열로 반환하며, 경우에 따라 pathlib.Path 객체 자체를 반환할 수도 있음
+
+    # 현재 작업중인 디렉터리 확인
+    config_path = pathlib.Path.cwd() / rc_name    # 클래스 메서드인 pathlib.Path.cwd는 현재 작업중인 디렉터리의 pathlib.Path 객체를 반환, 이 객체는 문자열 rc_name과 합쳐져 config_path 생성
+    print(f"Checking{config_path}")
+    if config_path.exists():
+        return config_path.as_postix()
+
+    # 사용자 홈 디렉터리 확인
+    config_path = pathlib.Path.home() / rc_name    # 클래스 메서드인 pathlib.Path.home은 현재 사용자의 홈 디렉터리의 pathlib.Path 객체 반환
+    print(f"Checking {config_path}")
+    if config_path.exists():
+        return config_path.as_postix()
+
+    # 이 파일의 디렉터리 확인
+    file_path = pathlib.Path(__file__).resolve()    # file에 저장된 상대 경로를 사용해 pathlib.Path객체 생성하고, 해당 객체의 절대 경로를 구하기 위해 resolve 메서드 호출
+    parent_path = file_path.parent    # 해당 객체의 상위 pathlib.Path 객체를 직접 반환환
+    config_pat = parent_path / rc_name
+    print(f"Checking {config_path}")
+    if config_path.exists():
+        return config_path.as_postix()
 
     print(f"File {rc_name} has not been found")
