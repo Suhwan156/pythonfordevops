@@ -6,15 +6,17 @@
 
 ```python
 import os
-os.listdir('.')    # 디렉터리 목록 보여주기
-os.rename('_crud_handler', 'crud_handler')    # 파일 또는 디렉터리 이름 바꾸기
-os.chmod('my_script.py', 0o777)    # 파일 또는 디렉터리 권한 설정 변경
-os.mkdir('/tmp/holding')    # 디렉터리 생성
-os.makedirs('/Usrs/kbehrman/tmp/scripts/devops')    # 재귀적으로 디렉터리 경로 생성
-os.remove('my_script.py')    # 단일 디렉터리 삭제
-os.removedirs('/Usrs/kbehrman/tmp/scripts/devops')    # 최하위 경로에서부터 시작하여 디렉터리 트리 삭제하기, 비어있지 않은 디렉터리가 나타나면 연산 멈춤
-os.stat('.ssh')    #파일 또는 디렉터리의 상탯값 구하기, 이 값에는 파일 타입과 권한을 나타내는 st_mode와 해당 항목에 마지막으로 접근한 시간을 나타내는 st_atime이 포함되어있음
-os.stat_result(st_mode=16832, st_ino=16777344, st_dev=51714, st_nlink=2, st_uid=0, st_gid=0, st_size=29, st_atime=1640335637, st_mtime=1640334913, st_ctime=1640334913)
+
+os.listdir('..')  # 디렉터리 목록 보여주기
+os.rename('_crud_handler', 'crud_handler')  # 파일 또는 디렉터리 이름 바꾸기
+os.chmod('my_script.py', 0o777)  # 파일 또는 디렉터리 권한 설정 변경
+os.mkdir('/tmp/holding')  # 디렉터리 생성
+os.makedirs('/Usrs/kbehrman/tmp/scripts/devops')  # 재귀적으로 디렉터리 경로 생성
+os.remove('my_script.py')  # 단일 디렉터리 삭제
+os.removedirs('/Usrs/kbehrman/tmp/scripts/devops')  # 최하위 경로에서부터 시작하여 디렉터리 트리 삭제하기, 비어있지 않은 디렉터리가 나타나면 연산 멈춤
+os.stat('.ssh')  # 파일 또는 디렉터리의 상탯값 구하기, 이 값에는 파일 타입과 권한을 나타내는 st_mode와 해당 항목에 마지막으로 접근한 시간을 나타내는 st_atime이 포함되어있음
+os.stat_result(st_mode=16832, st_ino=16777344, st_dev=51714, st_nlink=2, st_uid=0, st_gid=0, st_size=29,
+               st_atime=1640335637, st_mtime=1640334913, st_ctime=1640334913)
 ```
 
 ### os.path를 활용한 파일 및 디렉터리 관리
